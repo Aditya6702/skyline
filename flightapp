@@ -1,0 +1,35 @@
+import React from "react";
+
+const FlightTable = ({ flights }) => {
+  return (
+    <div>
+      <h2>Flight List</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Hex</th>
+            <th scope="col">Flag</th>
+            <th scope="col">Latitude</th>
+            <th scope="col">Longitude</th>
+            <th scope="col">Direction</th>
+            <th scope="col">Altitude</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flights.map((flight) => (
+            <tr key={flight.hex}>
+              <td>{flight.hex}</td>
+              <td>{flight.flag}</td>
+              <td>{flight.lat}</td>
+              <td>{flight.lng}</td>
+              <td>{flight.dir}</td>
+              <td>{flight.alt}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default FlightTable;
