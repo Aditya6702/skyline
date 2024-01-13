@@ -30,7 +30,6 @@ contract Flights {
     }
 
     Flight[] public flightArray;
-    Maintenance[] public maintArray;
 
     // Add this function to get the flight index
     function getFlightIndex(string memory _sid) internal view returns (uint8) {
@@ -50,84 +49,71 @@ contract Flights {
         newFlight.id = _id;
     }
 
-    function getFlightAbs(string memory _sid) external view returns (string memory, string memory, string memory, string memory) {
-        uint8 _flightIndex = getFlightIndex(_sid);
-        return (flightArray[_flightIndex].image, flightArray[_flightIndex].name, flightArray[_flightIndex].model, flightArray[_flightIndex].id);
-    }
-
- function getFlightDetail(string memory _sid) external view returns (
-    string memory, string memory, string memory, string memory,
-    string memory, string memory, string memory,
-    string memory, string memory, string memory, string memory, string memory
-) {
-    uint8 _index = getFlightIndex(_sid);
-    Flight storage currentFlight = flightArray[_index];
-
-    return (
-        currentFlight.name,
-        currentFlight.model,
-        currentFlight.maintenance["issue"],
-        currentFlight.maintenance["solution"],
-        currentFlight.maintenance["verdict"], // Include the new parameter
-        currentFlight.maintenance["cost"],
-        currentFlight.logs[currentFlight.logs.length - 1].details,
-        currentFlight.logs[currentFlight.logs.length - 1].duration,
-        currentFlight.maintenance["fuelCapacity"], // Include the new parameter
-        currentFlight.maintenance["engineStatus"], // Include the new parameter
-        currentFlight.maintenance["safety"], // Include the new parameter
-        currentFlight.maintenance["atcR"] // Include the new parameter
-    );
-}
-
-    function updateFlightLogs(string memory _logDetails, string memory _flightDuration, string memory _blackBox, string memory _fuelConsum, string memory _sid) public {
-        uint8 _flightIndex = getFlightIndex(_sid);
-        Flight storage currentFlight = flightArray[_flightIndex];
+    function addLogs(
+        string memory _id,
+        string memory _details,
+        string memory _duration,
+        string memory _blackBox,
+        string memory _fuelConsum
+    ) public {
+        uint8 _index = getFlightIndex(_id);
+        Flight storage currentFlight = flightArray[_index];
         Logs memory newLog;
-        newLog.details = _logDetails;
-        newLog.duration = _flightDuration;
+        newLog.details = _details;
+        newLog.duration = _duration;
         newLog.blackBox = _blackBox;
         newLog.fuelConsum = _fuelConsum;
-        currentFlight.logs.push(newLog); // Add the new log to the logs array
+        currentFlight.logs.push(newLog);
     }
 
-  function updateMaintenanceDetails(
-    string memory _fuelCapacity,
-    string memory _engineStatus,
-    string memory _safety,
-    string memory _atcR,
-    string memory _emission,
-    string memory _time,
-    string memory _sid
-) public {
-    uint8 _flightIndex = getFlightIndex(_sid);
-    Flight storage presentFlight = flightArray[_flightIndex];
+    function addMaintenance(
+        string memory _id,
+        string memory _fuelCapacity,
+        string memory _engineStatus,
+        string memory _safety,
+        string memory _atcR,
+        string memory _emission,
+        string memory _time
+    ) public {
+        uint8 _index = getFlightIndex(_id);
+        Flight storage currentFlight = flightArray[_index];
+        currentFlight.maintenance["fuelCapacity"] = _fuelCapacity;
+        currentFlight.maintenance["engineStatus"] = _engineStatus;
+        currentFlight.maintenance["safety"] = _safety;
+        currentFlight.maintenance["atcR"] = _atcR;
+        currentFlight.maintenance["emission"] = _emission;
+        currentFlight.maintenance["time"] = _time;
+    }
 
-    // Update additional maintenance parameters
-    presentFlight.maintenance["fuelCapacity"] = _fuelCapacity;
-    presentFlight.maintenance["engineStatus"] = _engineStatus;
-    presentFlight.maintenance["safety"] = _safety;
-    presentFlight.maintenance["atcR"] = _atcR;
-    presentFlight.maintenance["emission"] = _emission;
-    presentFlight.maintenance["time"] = _time;
-}
-
-
-    // Get flight details without logs
-    function getFlightDetailsWithoutLogs(string memory _sid) external view returns (
-        string memory, string memory, string memory, string memory,
-        string memory, string memory, string memory
+    // Get only Flight details
+    function getFlightDetails(string memory _sid) external view returns (
+        string memory, string memory, string memory, string memory
     ) {
         uint8 _index = getFlightIndex(_sid);
         Flight storage currentFlight = flightArray[_index];
-
         return (
-            currentFlight.image, currentFlight.name, currentFlight.model, currentFlight.id,
-            currentFlight.maintenance["issue"], currentFlight.maintenance["solution"], currentFlight.maintenance["cost"]
+            currentFlight.image, currentFlight.name, currentFlight.model, currentFlight.id
         );
     }
 
-    // Get all logs for a flight
-    function getFlightLogs(string memory _sid) external view returns (Logs[] memory) {
+    // Get all Maintenance records for a flight
+    function getAllMaintenanceDetails(string memory _sid) external view returns (
+        string memory, string memory, string memory, string memory, string memory, string memory
+    ) {
+        uint8 _index = getFlightIndex(_sid);
+        Flight storage currentFlight = flightArray[_index];
+        return (
+            currentFlight.maintenance["fuelCapacity"],
+            currentFlight.maintenance["engineStatus"],
+            currentFlight.maintenance["safety"],
+            currentFlight.maintenance["atcR"],
+            currentFlight.maintenance["emission"],
+            currentFlight.maintenance["time"]
+        );
+    }
+
+    // Get all Logs for a flight
+    function getAllLogs(string memory _sid) external view returns (Logs[] memory) {
         uint8 _index = getFlightIndex(_sid);
         return flightArray[_index].logs;
     }
