@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Preloader from "../src/components/Pre";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
-import About from "./components/Help/About";
-import Projects from "./components/Maintanence/Projects";
+import About from "./components/Help/About1";
+import Projects from "./components/Flight-Home/Projects";
 import Footer from "./components/Footer";
 import Resume from "./components/catalog/ResumeNew";
 import {
@@ -36,7 +36,7 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/maintanence" element={<Projects />} />
+          <Route path="/Flight-Home" element={<Projects />} />
           <Route path="/help" element={<About />} />
           <Route path="/catalog" element={<Resume />} />
           {/* <Route path="/register" element={<Register />} /> */}

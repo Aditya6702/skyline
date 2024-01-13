@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import AiwithText from './components/AiwithText';
-import AiwithImage from './components/AiwithImage';
-import { Button,ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';  // Make sure you have the correct import statements
+import AiwithText from './AiwithText';  // Adjust the import path based on your project structure
+import AiwithImage from './AiwithImage';  // Adjust the import path based on your project structure
+import Particle from './Particle';  // Adjust the import path based on your project structure
+
 const Home = () => {
-  const [aiWith, setLAiWith] = useState('text');
+  const [aiWith, setAiWith] = useState('text');
 
   const handleAiWith = (value) => {
-    setLAiWith(value);
+    setAiWith(value);
   }
 
   return (
     <div>
-      
-
       <ButtonGroup
-      style={{
-        marginTop:'10rem',
-      }}
+        style={{
+          marginTop: '10rem',
+        }}
       >
         <Button
           onClick={() => handleAiWith('text')}
@@ -26,10 +26,10 @@ const Home = () => {
         </Button>
 
         <Button
-          style={{ marginLeft: '20px',
-        padding:'1.5rem',
-
-    }}
+          style={{
+            marginLeft: '20px',
+            padding: '1.5rem',
+          }}
           onClick={() => handleAiWith('image')}
           variant={aiWith === 'image' ? 'primary' : 'secondary'}
         >
@@ -37,12 +37,8 @@ const Home = () => {
         </Button>
       </ButtonGroup>
 
-      {
-        aiWith == 'text' ?
-          <AiwithText />
-          :
-          <AiwithImage />
-      }
+      {aiWith === 'text' ? <AiwithText /> : <AiwithImage />}
+      <Particle></Particle>
     </div>
   );
 };

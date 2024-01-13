@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 const AiwithText = () => {
-    const genAI = new GoogleGenerativeAI('AIzaSyDtiBA7Z3cIgjqzSktQUm0zGj3uQBAWuso');
+    const genAI = new GoogleGenerativeAI('AIzaSyAGnPM4kF6jen0oi93o9skEsNjUq69Qzyo');
 
     const [search, setSearch] = useState('');
     const [aiResponse, setResponse] = useState('');

@@ -15,6 +15,8 @@ function Projects() {
         <p style={{ color: "white" }}>
         Check all your Logs here
         </p>
+        <ProjectCard></ProjectCard>
+        <ProjectCard></ProjectCard>
       </Container>
     </Container>
   );
