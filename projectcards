@@ -1,0 +1,72 @@
+import React, { useState } from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { CgWebsite } from "react-icons/cg";
+
+function ProjectCards(props) {
+  const [depIata, setDepIata] = useState("");
+  const [arrIata, setArrIata] = useState("");
+
+  const handleSearch = () => {
+    // You can implement the logic to trigger the API call with the user inputs
+    console.log('Search button clicked with inputs:', depIata, arrIata);
+    // For now, just log the values to the console
+  };
+
+  return (
+    <Card className="project-card-view">
+      <Card.Body>
+        <Card.Title>{props.title}</Card.Title>
+        <Card.Text style={{ textAlign: "justify" }}>
+          {props.description}
+        </Card.Text>
+        <div>
+          <label>
+            Departure IATA code:
+            <input
+              type="text"
+              value={depIata}
+              onChange={(e) => setDepIata(e.target.value)}
+            />
+          </label>
+          <label>
+            Arrival IATA code:
+            <input
+              type="text"
+              value={arrIata}
+              onChange={(e) => setArrIata(e.target.value)}
+            />
+          </label>
+          <Button variant="primary" onClick={handleSearch}>
+            Search Flights
+          </Button>
+        </div>
+      </Card.Body>
+
+      {/* Include your custom HTML structure below */}
+      {/* Replace with your custom HTML structure */}
+      <div className="card mb-3">
+        <div className="row no-gutters">
+          <div className="col-md-4">
+            <img src="..." className="card-img" alt="..." />
+          </div>
+          <div className="col-md-8">
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </p>
+              <p className="card-text">
+                <small className="text-muted">Last updated 3 mins ago</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+export default ProjectCards;
