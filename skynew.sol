@@ -8,11 +8,10 @@ contract Flights {
         string name;
         string model;
         Logs[] logs;
-        mapping (string => string) maintenance;
+        Maintenance[] maintenances; // Array to store multiple maintenance records
     }
 
     struct Maintenance {
-        string id;
         string fuelCapacity;
         string engineStatus;
         string safety;
@@ -22,7 +21,6 @@ contract Flights {
     }
 
     struct Logs {
-        string id;
         string details;
         string duration;
         string blackBox;
@@ -77,12 +75,14 @@ contract Flights {
     ) public {
         uint8 _index = getFlightIndex(_id);
         Flight storage currentFlight = flightArray[_index];
-        currentFlight.maintenance["fuelCapacity"] = _fuelCapacity;
-        currentFlight.maintenance["engineStatus"] = _engineStatus;
-        currentFlight.maintenance["safety"] = _safety;
-        currentFlight.maintenance["atcR"] = _atcR;
-        currentFlight.maintenance["emission"] = _emission;
-        currentFlight.maintenance["time"] = _time;
+        Maintenance memory newMaintenance;
+        newMaintenance.fuelCapacity = _fuelCapacity;
+        newMaintenance.engineStatus = _engineStatus;
+        newMaintenance.safety = _safety;
+        newMaintenance.atcR = _atcR;
+        newMaintenance.emission = _emission;
+        newMaintenance.time = _time;
+        currentFlight.maintenances.push(newMaintenance);
     }
 
     // Get only Flight details
@@ -97,19 +97,9 @@ contract Flights {
     }
 
     // Get all Maintenance records for a flight
-    function getAllMaintenanceDetails(string memory _sid) external view returns (
-        string memory, string memory, string memory, string memory, string memory, string memory
-    ) {
+    function getAllMaintenanceDetails(string memory _sid) external view returns (Maintenance[] memory) {
         uint8 _index = getFlightIndex(_sid);
-        Flight storage currentFlight = flightArray[_index];
-        return (
-            currentFlight.maintenance["fuelCapacity"],
-            currentFlight.maintenance["engineStatus"],
-            currentFlight.maintenance["safety"],
-            currentFlight.maintenance["atcR"],
-            currentFlight.maintenance["emission"],
-            currentFlight.maintenance["time"]
-        );
+        return flightArray[_index].maintenances;
     }
 
     // Get all Logs for a flight
