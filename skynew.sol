@@ -7,11 +7,10 @@ contract Flights {
         string image;
         string name;
         string model;
-        Logs[] logs;
-        Maintenance[] maintenances; // Array to store multiple maintenance records
     }
 
     struct Maintenance {
+        string flightId;
         string fuelCapacity;
         string engineStatus;
         string safety;
@@ -21,6 +20,7 @@ contract Flights {
     }
 
     struct Logs {
+        string flightId;
         string details;
         string duration;
         string blackBox;
@@ -28,6 +28,8 @@ contract Flights {
     }
 
     Flight[] public flightArray;
+    Maintenance[] public maintenanceArray;
+    Logs[] public logsArray;
 
     // Add this function to get the flight index
     function getFlightIndex(string memory _sid) internal view returns (uint8) {
@@ -40,76 +42,62 @@ contract Flights {
     }
 
     function addFlights(string memory _image, string memory _name, string memory _model, string memory _id) external {
-        Flight storage newFlight = flightArray.push();
+        Flight memory newFlight;
         newFlight.image = _image;
         newFlight.name = _name;
         newFlight.model = _model;
         newFlight.id = _id;
+        flightArray.push(newFlight);
     }
 
     function addLogs(
-        string memory _id,
+        string memory _flightId,
         string memory _details,
         string memory _duration,
         string memory _blackBox,
         string memory _fuelConsum
-    ) public {
-        uint8 _index = getFlightIndex(_id);
-        Flight storage currentFlight = flightArray[_index];
+    ) external {
         Logs memory newLog;
+        newLog.flightId = _flightId;
         newLog.details = _details;
         newLog.duration = _duration;
         newLog.blackBox = _blackBox;
         newLog.fuelConsum = _fuelConsum;
-        currentFlight.logs.push(newLog);
+        logsArray.push(newLog);
     }
 
     function addMaintenance(
-        string memory _id,
+        string memory _flightId,
         string memory _fuelCapacity,
         string memory _engineStatus,
         string memory _safety,
         string memory _atcR,
         string memory _emission,
         string memory _time
-    ) public {
-        uint8 _index = getFlightIndex(_id);
-        Flight storage currentFlight = flightArray[_index];
+    ) external {
         Maintenance memory newMaintenance;
+        newMaintenance.flightId = _flightId;
         newMaintenance.fuelCapacity = _fuelCapacity;
         newMaintenance.engineStatus = _engineStatus;
         newMaintenance.safety = _safety;
         newMaintenance.atcR = _atcR;
         newMaintenance.emission = _emission;
         newMaintenance.time = _time;
-        currentFlight.maintenances.push(newMaintenance);
-    }
-
-    // Get only Flight details
-    function getFlightDetails(string memory _sid) external view returns (
-        string memory, string memory, string memory, string memory
-    ) {
-        uint8 _index = getFlightIndex(_sid);
-        Flight storage currentFlight = flightArray[_index];
-        return (
-            currentFlight.image, currentFlight.name, currentFlight.model, currentFlight.id
-        );
-    }
-
-    // Get all Maintenance records for a flight
-    function getAllMaintenanceDetails(string memory _sid) external view returns (Maintenance[] memory) {
-        uint8 _index = getFlightIndex(_sid);
-        return flightArray[_index].maintenances;
+        maintenanceArray.push(newMaintenance);
     }
 
     // Get all Flight details
-    function getAllFlights() external view returns(Flight [] memory){
+    function getAllFlights() external view returns (Flight[] memory) {
         return flightArray;
     }
 
-    // Get all Logs for a flight
-    function getAllLogs(string memory _sid) external view returns (Logs[] memory) {
-        uint8 _index = getFlightIndex(_sid);
-        return flightArray[_index].logs;
+    // Get all Maintenance records
+    function getAllMaintenanceDetails() external view returns (Maintenance[] memory) {
+        return maintenanceArray;
+    }
+
+    // Get all Logs
+    function getAllLogs() external view returns (Logs[] memory) {
+        return logsArray;
     }
 }
