@@ -1,0 +1,15 @@
+const request = require("request");
+
+const api_key = "9dc82e7a-00ab-4dc0-bc61-6f077199620d";
+const api_base = "https://airlabs.co/api/v9/";
+
+function apiCall(url, cb) {
+  request.get({ url: `${api_base}${url}` }, cb);
+}
+
+const flightEndpoint = "flights?_view=array&_fields=hex,flag,lat,lng,dir,alt";
+const apiKeyParam = `&api_key=${api_key}`;
+
+apiCall(`${flightEndpoint}${apiKeyParam}`, (err, res, body) => {
+  console.log(body);
+});
