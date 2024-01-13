@@ -1,15 +1,12 @@
-import abi from "./artifacts/contracts/Flights.sol/Flights.json";
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import About from "./components/Help/About1";
 import Resume from "./components/catalog/ResumeNew";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import "./style.css";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import abi from "./artifacts/contracts/Flights.sol/Flights.json";
 const ethers = require('ethers');
 
 function App() {
@@ -24,7 +21,9 @@ function App() {
     const connectWallet = async () => {
       const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
       const contractabi = abi.abi;
+
       try {
+        // Destructuring assignment for cleaner code
         const { ethereum } = window;
 
         if (!ethereum) {
@@ -32,22 +31,28 @@ function App() {
           return;
         }
 
+        // Requesting accounts from MetaMask
         const accounts = await ethereum.request({ method: "eth_requestAccounts" });
         const account = accounts[0];
 
+        // Creating provider, signer, and contract instances
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         const contract = new ethers.Contract(contractAddress, contractabi, signer);
+
+        // Update the state with the obtained values
         setState({ address, provider, signer, contract });
       } catch (error) {
         console.error(error);
       }
     };
 
+    // Call connectWallet function when the component mounts
     connectWallet();
   }, []);
 
+  // Log the state to the console for debugging
   console.log(state);
 
   return (
@@ -65,3 +70,5 @@ function App() {
     </Router>
   );
 }
+
+export default App;
