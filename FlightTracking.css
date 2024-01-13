@@ -1,0 +1,50 @@
+/* Add styles for FlightTracking component */
+
+.flight-tracking-container {
+    padding: 20px;
+  }
+  
+  .search-section {
+    margin-top: 20px;
+  }
+  
+  label {
+    color: blue; /* Set label color to blue */
+    display: block;
+    margin-bottom: 8px;
+    padding-top: 10px; /* Add more padding-top */
+  }
+  
+  input {
+    margin-bottom: 12px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Add styles for FlightTable component */
+  
+  .flight-table {
+    margin-left:150px ;
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: white; /* Set text color to white */
+  }
+  
+  .flight-table th, .flight-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .flight-table th {
+    background-color: #4caf50;
+    color: white;
+  }
+  
