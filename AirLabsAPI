@@ -1,15 +1,32 @@
-const request = require("request");
+const axios = require("axios");
 
 const api_key = "9dc82e7a-00ab-4dc0-bc61-6f077199620d";
 const api_base = "https://airlabs.co/api/v9/";
 
 function apiCall(url, cb) {
-  request.get({ url: `${api_base}${url}` }, cb);
+  axios.get(`${api_base}${url}`)
+    .then(response => {
+      cb(null, response, response.data);
+    })
+    .catch(error => {
+      cb(error, null, null);
+    });
 }
 
-const flightEndpoint = "flights?_view=array&_fields=hex,flag,lat,lng,dir,alt";
+// Add your new filter parameters here
+const newFilterParams = {
+  dep_iata: "SFO", // Replace with the actual departure airport code
+  arr_iata: "JFK", // Replace with the actual arrival airport code
+};
+
+const queryString = Object.entries(newFilterParams)
+  .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+  .join("&");
+
+const flightEndpoint = `flights?_view=array&_fields=hex,flag,lat,lng,dir,alt&${queryString}`;
 const apiKeyParam = `&api_key=${api_key}`;
 
 apiCall(`${flightEndpoint}${apiKeyParam}`, (err, res, body) => {
   console.log(body);
 });
+
