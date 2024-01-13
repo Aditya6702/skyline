@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';  // Make sure you have the correct import statements
-import AiwithText from './AiwithText';  // Adjust the import path based on your project structure
-import AiwithImage from './AiwithImage';  // Adjust the import path based on your project structure
-import Particle from './Particle';  // Adjust the import path based on your project structure
+import AiwithText from './components/AiwithText';  // Adjust the import path based on your project structure
+import AiwithImage from './components/AiwithImage';  // Adjust the import path based on your project structure
+import Particle from '../Particle';  // Adjust the import path based on your project structure
 
 const Home = () => {
   const [aiWith, setAiWith] = useState('text');

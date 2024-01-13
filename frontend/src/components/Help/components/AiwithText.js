@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 const AiwithText = () => {
-    const genAI = new GoogleGenerativeAI('AIzaSyAGnPM4kF6jen0oi93o9skEsNjUq69Qzyo');
+    const genAI = new GoogleGenerativeAI('AIzaSyDtiBA7Z3cIgjqzSktQUm0zGj3uQBAWuso');
 
     const [search, setSearch] = useState('');
     const [aiResponse, setResponse] = useState('');
@@ -13,10 +12,13 @@ const AiwithText = () => {
      * Generative AI Call to fetch text insights
      */
     async function aiRun() {
+        
+
+
         setLoading(true);
         setResponse('');
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = `based on the text, provide some fixes and help for flight maintenance for fixing the problem ${search} category with images `;
+        const prompt = `if the user greets else if the following is the observation or issue in observed in the flight maintenence help me with fixes and solutions fo the same${search} `;
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
@@ -33,40 +35,26 @@ const AiwithText = () => {
     }
 
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <div style={{ display: 'flex' }}>
-                        <InputGroup>
-                            <FormControl
-                                placeholder='What is your issue?'
-                                onChange={(e) => handleChangeSearch(e)}
-                            />
-                        </InputGroup>
-                        <Button style={{ marginLeft: '20px' }} onClick={() => handleClick()}>
-                            Search
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
+<div className="container mt-3">
+            <div className="d-flex">
+                <input className="form-control" placeholder='What is your issue?' onChange={(e) => handleChangeSearch(e)} />
+                <button className="btn btn-primary ml-3" onClick={() => handleClick()}
+                style={{
+                    marginTop:'10rem',
+                    marginLeft:'2rem'
+                }}
+                >Search</button>
+            </div>
 
-            <Row style={{ margin: '30px 0' }}>
-                <Col>
-                    {loading && aiResponse === '' ? (
-                        <p>Loading...</p>
-                    ) : (
-                        <div style={{ margin: '30px 0' }}>
-                            <p style={{
-                                color: 'white', // Set text color to white
-                                fontSize: '16px', // Set font size if needed
-                                lineHeight: '1.6', // Set line height if needed
-                                // Add other styles as needed
-                            }}>{aiResponse}</p>
-                        </div>
-                    )}
-                </Col>
-            </Row>
-        </Container>
+            {loading && aiResponse === '' ? (
+                <p className="mt-3 text-white">Loading ...</p>
+            ) : (
+                <div className="mt-3">
+                    <p className="text-white">{aiResponse}</p>
+                </div>
+            )}
+        </div>
+    
     );
 };
 

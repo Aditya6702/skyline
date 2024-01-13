@@ -1,3 +1,128 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+function solution(A) {
+ const N = A.length;
+ if (N < 2) return 0;
+ const countMoves = {};
+ let maxMoves = 0;
+ for (let i = 0; i < N - 1; i++) {
+   if (i < N - 2) {
+     const sum3 = A[N - 2] + A[N - 1];
+     countMoves[sum3] = (countMoves[sum3] || 0) + 1;
+     maxMoves = Math.max(maxMoves, countMoves[sum3]);
+   }
+   if (i < N - 2) {
+     const sum2 = A[i] + A[N - 1];
+     countMoves[sum2] = (countMoves[sum2] || 0) + 1;
+     maxMoves = Math.max(maxMoves, countMoves[sum2]);
+   }
+   const sum1 = A[i] + A[i + 1];
+   countMoves[sum1] = (countMoves[sum1] || 0) + 1;
+   maxMoves = Math.max(maxMoves, countMoves[sum1]);
+ }
+ return maxMoves;
+}
+
+function solution(A) {
+  const N = A.length;
+  const counts = {};
+  for (let i = 0; i < N; i++) {
+    counts[A[i]] = (counts[A[i]] || 0) + 1;
+  }
+
+  let maxCount = 0;
+
+  for (let diff = 1; diff <= 100; diff++) {
+    let currentCount = 0;
+    let prevValue = null;
+
+    for (let value in counts) {
+      if (prevValue !== null && value !== prevValue + diff) {
+        currentCount = 0;
+      }
+      currentCount += counts[value];
+      prevValue = value;
+      maxCount = Math.max(maxCount, currentCount);
+    }
+  }
+
+  maxCount = Math.max(maxCount, Math.max(...Object.values(counts)));
+
+  return maxCount;
+}
+
+
+
+A.sort((a, b) => a - b);
+    let commonDiff = A[1] - A[0];
+    let count = 1;
+    let maxCount = 1;
+
+    for (let i = 1; i < A.length - 1; i++) {
+        if (A[i + 1] - A[i] === commonDiff) {
+            count++;
+            maxCount = Math.max(maxCount, count);
+        } else {
+            count = 1;
+            commonDiff = A[i + 1] - A[i];
+        }
+    }
+
+    return maxCount;
+
+    function solution(A) {
+  const N = A.length;
+  const counts = {};
+  for (let i = 0; i < N; i++) {
+    counts[A[i]] = (counts[A[i]] || 0) + 1;
+  }
+
+  let maxCount = 0;
+
+  for (let diff = 1; diff <= 100; diff++) {
+    let currentCount = 0;
+    let prevValue = null;
+
+    for (let value of Object.keys(counts).sort((a, b) => a - b)) {
+      if (prevValue !== null && value !== prevValue + diff) {
+        currentCount = 0;
+      }
+      if (!currentCount || value !== prevValue) {
+        currentCount += counts[value];
+      }
+      prevValue = value;
+      maxCount = Math.max(maxCount, currentCount);
+    }
+  }
+
+  maxCount = Math.max(maxCount, Math.max(...Object.values(counts)));
+
+  return maxCount;
+}
+
+
+function solution(A) {
+  const N = A.length;
+  const counts = {};
+  for (let i = 0; i < N; i++) {
+    counts[A[i]] = (counts[A[i]] || 0) + 1;
+  }
+
+  let maxCount = 0;
+
+  for (let diff = 1; diff <= 100; diff++) {
+    let currentCount = 0;
+    let prevValue = null;
+
+    for (let value of Object.keys(counts).sort((a, b) => a - b)) {
+      if (prevValue !== null && value !== prevValue + diff) {
+        currentCount = 0;
+      }
+      currentCount += Math.min(counts[value], 1);
+      prevValue = value;
+      maxCount = Math.max(maxCount, currentCount);
+    }
+  }
+
+  maxCount = Math.max(maxCount, Math.max(...Object.values(counts)));
+
+  return maxCount;
+}
