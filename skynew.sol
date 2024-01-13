@@ -102,6 +102,11 @@ contract Flights {
         return flightArray[_index].maintenances;
     }
 
+    // Get all Flight details
+    function getAllFlights() external view returns(Flight [] memory){
+        return flightArray;
+    }
+
     // Get all Logs for a flight
     function getAllLogs(string memory _sid) external view returns (Logs[] memory) {
         uint8 _index = getFlightIndex(_sid);
