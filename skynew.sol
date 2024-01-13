@@ -55,18 +55,29 @@ contract Flights {
         return (flightArray[_flightIndex].image, flightArray[_flightIndex].name, flightArray[_flightIndex].model, flightArray[_flightIndex].id);
     }
 
-    function getFlightDetail(string memory _sid) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory) {
-        uint8 _index = getFlightIndex(_sid);
-        return (
-            flightArray[_index].name,
-            flightArray[_index].model,
-            flightArray[_index].maintenance["issue"],
-            flightArray[_index].maintenance["solution"],
-            flightArray[_index].maintenance["cost"],
-            flightArray[_index].logs[flightArray[_index].logs.length - 1].details,
-            flightArray[_index].logs[flightArray[_index].logs.length - 1].duration
-        );
-    }
+ function getFlightDetail(string memory _sid) external view returns (
+    string memory, string memory, string memory, string memory,
+    string memory, string memory, string memory,
+    string memory, string memory, string memory, string memory, string memory
+) {
+    uint8 _index = getFlightIndex(_sid);
+    Flight storage currentFlight = flightArray[_index];
+
+    return (
+        currentFlight.name,
+        currentFlight.model,
+        currentFlight.maintenance["issue"],
+        currentFlight.maintenance["solution"],
+        currentFlight.maintenance["verdict"], // Include the new parameter
+        currentFlight.maintenance["cost"],
+        currentFlight.logs[currentFlight.logs.length - 1].details,
+        currentFlight.logs[currentFlight.logs.length - 1].duration,
+        currentFlight.maintenance["fuelCapacity"], // Include the new parameter
+        currentFlight.maintenance["engineStatus"], // Include the new parameter
+        currentFlight.maintenance["safety"], // Include the new parameter
+        currentFlight.maintenance["atcR"] // Include the new parameter
+    );
+}
 
     function updateFlightLogs(string memory _logDetails, string memory _flightDuration, string memory _blackBox, string memory _fuelConsum, string memory _sid) public {
         uint8 _flightIndex = getFlightIndex(_sid);
@@ -79,22 +90,27 @@ contract Flights {
         currentFlight.logs.push(newLog); // Add the new log to the logs array
     }
 
-    function updateFlightMaintenance(string memory _issue, string memory _solution, string memory _verdict, string memory _cost, string memory _fuelCapacity, string memory _engineStatus, string memory _safety, string memory _atcR, string memory _emission, string memory _time, string memory _sid) public {
-        uint8 _flightIndex = getFlightIndex(_sid);
-        Flight storage presentFlight = flightArray[_flightIndex];
-        presentFlight.maintenance["issue"] = _issue;
-        presentFlight.maintenance["solution"] = _solution;
-        presentFlight.maintenance["verdict"] = _verdict;
-        presentFlight.maintenance["cost"] = _cost;
+  function updateMaintenanceDetails(
+    string memory _fuelCapacity,
+    string memory _engineStatus,
+    string memory _safety,
+    string memory _atcR,
+    string memory _emission,
+    string memory _time,
+    string memory _sid
+) public {
+    uint8 _flightIndex = getFlightIndex(_sid);
+    Flight storage presentFlight = flightArray[_flightIndex];
 
-        // Additional maintenance parameters
-        presentFlight.maintenance["fuelCapacity"] = _fuelCapacity;
-        presentFlight.maintenance["engineStatus"] = _engineStatus;
-        presentFlight.maintenance["safety"] = _safety;
-        presentFlight.maintenance["atcR"] = _atcR;
-        presentFlight.maintenance["emission"] = _emission;
-        presentFlight.maintenance["time"] = _time;
-    }
+    // Update additional maintenance parameters
+    presentFlight.maintenance["fuelCapacity"] = _fuelCapacity;
+    presentFlight.maintenance["engineStatus"] = _engineStatus;
+    presentFlight.maintenance["safety"] = _safety;
+    presentFlight.maintenance["atcR"] = _atcR;
+    presentFlight.maintenance["emission"] = _emission;
+    presentFlight.maintenance["time"] = _time;
+}
+
 
     // Get flight details without logs
     function getFlightDetailsWithoutLogs(string memory _sid) external view returns (
