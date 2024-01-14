@@ -92,3 +92,11 @@ Follow these steps to set up and run the Blockchain Flight Maintenance System lo
 ## License
 
 This project is licensed under the [MIT License](LICENSE). Feel free to contribute and modify as needed.
+
+## Project Snippetes
+<img width="1680" alt="Screenshot 2024-01-14 at 10 51 31 AM" src="https://github.com/viser9/skyline/assets/135937452/730dd958-548c-4948-b61e-1d5657e6e029">
+<img width="1680" alt="Screenshot 2024-01-14 at 10 49 09 AM" src="https://github.com/viser9/skyline/assets/135937452/1ad207d9-5903-4311-94b8-f85e0fe69986">
+<img width="1680" alt="Screenshot 2024-01-14 at 10 51 18 AM" src="https://github.com/viser9/skyline/assets/135937452/cbb2752a-439e-4216-b3b6-083f4f6f546a">
+<img width="1680" alt="Screenshot 2024-01-14 at 10 51 04 AM" src="https://github.com/viser9/skyline/assets/135937452/d0f329d6-d72e-4ef2-a05d-7dcc0589c1f6">
+<img width="1680" alt="Screenshot 2024-01-14 at 10 49 18 AM" src="https://github.com/viser9/skyline/assets/135937452/3b61a823-1cb7-4125-8476-835dda06d3bd">
+
