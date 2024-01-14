@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./FlightTracking.css"; // Import a CSS file for styling
+import "bootstrap/dist/css/bootstrap.min.css";
+import Particle from "./Particle";
+import { blue } from "@mui/material/colors";
 
 const api_key = "9dc82e7a-00ab-4dc0-bc61-6f077199620d";
 const api_base = "https://airlabs.co/api/v9/";
@@ -29,31 +31,52 @@ const FlightTracking = () => {
   };
 
   return (
-    <div className="flight-tracking-container">
-      <h1>Flight Tracking</h1>
-      <div className="search-section">
-        <label>
-          Departure IATA code:
-          <input
-            type="text"
-            value={depIata}
-            onChange={(e) => setDepIata(e.target.value)}
-          />
-        </label>
-        <label>
-          Arrival IATA code:
-          <input
-            type="text"
-            value={arrIata}
-            onChange={(e) => setArrIata(e.target.value)}
-          />
-        </label>
-        <button onClick={handleSearch} disabled={loading}>
-          {loading ? "Searching..." : "Search Flights"}
-        </button>
+    <div className="container mt-4 text-white">
+      <h1 className="text-center" style={{
+        marginTop:'10rem',
+        fontSize:'3rem',
+        color:'rgb(9, 171, 171)',
+        fontWeight:'700'
+      }}>Flight Tracking</h1>
+      <div className="row">
+        <div className="col-md-4">
+          <label className="form-label" style={{
+            
+          }}>
+            
+            <input
+              type="text"
+              className="form-control"
+              value={depIata}
+            placeholder="Departure IATA code"
+              onChange={(e) => setDepIata(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-md-4">
+          <label className="form-label">
+            
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Arrival IATA"
+              value={arrIata}
+              onChange={(e) => setArrIata(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-md-4 d-flex align-items-end">
+          <button
+            className="btn btn-primary w-100"
+            onClick={handleSearch}
+            disabled={loading}
+          >
+            {loading ? "Searching..." : "Search Flights"}
+          </button>
+        </div>
       </div>
 
-      <table className="flight-table">
+      <table className="table mt-4 text-white">
         <thead>
           <tr>
             <th>Hex</th>
@@ -67,16 +90,17 @@ const FlightTracking = () => {
         <tbody>
           {flights.map((flight, index) => (
             <tr key={index}>
-            <td>{flight[0]}</td>
-            <td>{flight[1]}</td>
-            <td>{flight[2]}</td>
-            <td>{flight[3]}</td>
-            <td>{flight[4]}</td>
-            <td>{flight[5]}</td>
+              <td>{flight[0]}</td>
+              <td>{flight[1]}</td>
+              <td>{flight[2]}</td>
+              <td>{flight[3]}</td>
+              <td>{flight[4]}</td>
+              <td>{flight[5]}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Particle></Particle>
     </div>
   );
 };
